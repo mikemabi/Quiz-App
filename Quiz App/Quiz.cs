@@ -114,10 +114,12 @@ namespace Quiz_App
             if (response.Equals(ans))
             {
                 score = score + 1;
+                Console.Clear();
                 Console.WriteLine("That was correct!");
             }
             else
             {
+                Console.Clear();
                 Console.WriteLine("Wrong! The correct answer is {0}", ans);
             }
             return score;
@@ -179,6 +181,25 @@ namespace Quiz_App
 
         }
 
+        public static bool StopDeciscion()
+        {
+            while (true)
+            {
+                Console.WriteLine("Continue to the next question? Y/N");
+                bool j = char.TryParse(Console.ReadKey().KeyChar.ToString(), out char response);
+                Console.WriteLine("\n");
+                char responseCap = Char.ToUpper(response);
+                if (j && (responseCap.Equals('Y')))
+                    return true;
+                else if (j && (responseCap.Equals('N')))
+                    return false;
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Invalid Response. Please try again");
+                }
+            }
+        }
 
     }
 }
