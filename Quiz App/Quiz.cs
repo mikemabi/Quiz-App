@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Collections.Generic;
-using Quiz_App;
+
 
 namespace Quiz_App
 {
@@ -58,10 +58,10 @@ namespace Quiz_App
 
 
 
-        // Int array that will hold exactly what question is being asked
+        // List of integers that will hold exactly what question is being asked:
         public static List<int> AskedQuestions = new List<int>() { };
 
-        // getter method for the questions
+        // getter method for the questions:
         public string[] Questions
         {
             get
@@ -70,7 +70,7 @@ namespace Quiz_App
             }
         }
 
-        // and also getter method for the answers
+        // and also getter method for the answers:
         public char[] Answers
         {
             get
@@ -79,29 +79,35 @@ namespace Quiz_App
             }
         }
 
-        //Below is a method to return a single question, complete with options and correct answers
+        //Below is a method to return a single question, complete with options and correct answers:
         public void QuestnHandler(int i, out char ans)
         {
             string question = this.Questions[i];
             ans = this.Answers[i];
-            Console.WriteLine("You have chosen question {0}\n{1}", i, question);
+            Console.WriteLine("You have chosen question {0}\n{1}", i+1, question);
         }
 
+        //This method is to Capture the option of the question chosen by the user. It accepts no
+        //instance parameters, so is static:
         public static char ResponseCapture()
         {
 
             char responseCap;
 
             while (true)
-            {
-                bool j = char.TryParse(Console.ReadKey().ToString(), out char response);
+            { 
+                bool j = char.TryParse(Console.ReadKey().KeyChar.ToString(), out char response);
+                Console.WriteLine("\n");
                 responseCap = Char.ToUpper(response);
-                if (j && (responseCap.Equals('A') || responseCap.Equals('B') || responseCap.Equals('C'))) break;
+                if (j && (responseCap.Equals('A') || responseCap.Equals('B') || responseCap.Equals('C')))
+                    break;
                 Console.WriteLine("You have entered wrong. Please try again");
             }
             return responseCap;
         }
 
+        //Having received input from the user, this method compares it with the actual answer and keeps
+        //track of his scores:
         public int ProcessResponse(int i, char ans, int score)
         {
             char response = ResponseCapture();
@@ -112,7 +118,7 @@ namespace Quiz_App
             }
             else
             {
-                Console.WriteLine("Wrong!");
+                Console.WriteLine("Wrong! The correct answer is {0}", ans);
             }
             return score;
 
@@ -120,7 +126,8 @@ namespace Quiz_App
 
 
 
-        // Method to be called when a question is being asked
+        // Method to be called when a quiz question is to be asked; it determines that whatever number is
+        //entered is legal to be accepted by the program:
         public static int QuestnNum()
         {
 
@@ -177,9 +184,7 @@ namespace Quiz_App
 }
 
 
-/*Console.WriteLine("There are 20 Questions available; you can choose any five\n");
-for (int i = 0; i < 5; i++)
-{ */
+
 
 
 
