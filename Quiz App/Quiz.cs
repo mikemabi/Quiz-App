@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Quiz_App
 {
@@ -11,7 +11,7 @@ namespace Quiz_App
             "1) What is the name of Nigeria's immediate past president\n" +
                     "A) Ngozi Iweala B) Muhammadu Buhari C) Goodluck Jonathan",
             "2) What is the capital of Nigeria\n" +
-                    "A) Abuja B) Oyo C) Lagos\",
+                    "A) Abuja B) Oyo C) Lagos\n",
             "3) What Year did Nigeria gain Independence\n" +
                     "A) 1914 B) 1960 C) 1969",
             "4) Which of these is the approximate population of Nigeria\n" +
@@ -47,12 +47,12 @@ namespace Quiz_App
                 "A)54 B)60 C)90",
             "20) Who is the all-time leading world footballer awardee?\n" +
                 "A)Leo Messi B)Kylian Mbappe C)C. Ronaldo"};
-        
-        
+
+
 
         // and another array holding the correct answers:
-        private char[] _Answers = { 'B','A','B','C','C','A','A','C','C','C','C','A','A','B','C','C','B','A','A','A' } ;
-        char c = char.TryParse(Console.ReadKey().;
+        private char[] _Answers = { 'B', 'A', 'B', 'C', 'C', 'A', 'A', 'C', 'C', 'C', 'C', 'A', 'A', 'B', 'C', 'C', 'B', 'A', 'A', 'A' };
+
 
 
         // Int array that will hold exactly what question is being asked
@@ -67,52 +67,88 @@ namespace Quiz_App
             }
         }
 
-        // and also getter method for the options
-        public string[,] Options
+        // and also getter method for the answers
+        public char[] Answers
         {
             get
             {
-                return this._Options;
+                return this._Answers;
             }
         }
 
         //Below is a method to return a single question, complete with options and correct answers
-        public void QuestnFragment(int i, out string question, out string option, out string ans)
+        public void QuestnHandler(int i, out char ans)
         {
-            question = this.Questions[i];
-            option = this.Options[0, i];
-            ans = this.Options[1, i];
-            Console.WriteLine("You have chosen question {0}\n{1}\n{2}", i, question, option);
+            string question = this.Questions[i];
+            ans = this.Answers[i];
+            Console.WriteLine("You have chosen question {0}\n{1}", i, question);
+        }
+
+        public static char ResponseCapture()
+        {
+
+            char responseCap;
+
+            while (true)
+            {
+                bool j = char.TryParse(Console.ReadKey().ToString(), out char response);
+                responseCap = Char.ToUpper(response);
+                if (j && (responseCap.Equals('A') || responseCap.Equals('B') || responseCap.Equals('C'))) break;
+                Console.WriteLine("You have entered wrong. Please try again");
+            }
+            return responseCap;
+        }
+
+        public int ProcessResponse(int i, char ans, int score)
+        {
+            char response = ResponseCapture();
+            if (response.Equals(ans))
+            {
+                score = score + 1;
+                Console.WriteLine("That was correct!");
+            }
+            else
+            {
+                Console.WriteLine("Wrong!");
+            }
+            return score;
 
         }
+
+
 
         // Method to be called when a question is being asked
-        public void AskQuestn()
+        public static int AskQuestn()
         {
-            Console.WriteLine("There are 20 Questions available; you can choose any five\n");
-            for (int i = 0; i < 5; i++)
+
+            int num = 0;
+            Console.WriteLine("Please enter a number from 1 to 20:");
+            while (true)
             {
-                Console.WriteLine("Please enter a number from 1 to 20:");
-                int num = 0;
-                while (true)
-                {
-                    bool j = int.TryParse(Console.ReadLine(), out num);
-                    if (j) break;
-                    Console.WriteLine("That was not a number,please try again");
-                }
-                while ((num < 1) || (num > 20))
-                {
-                    Console.WriteLine("Please try again. A number between 1 and 20");
-                    if ((num > 0) || (num < 21)) break;
-                }
-                QuestnFragment(num, out string question, out string option, out string ans);
+                bool j = int.TryParse(Console.ReadLine(), out num);
+                if (j) break;
+                Console.WriteLine("That was not a number,please try again");
             }
+            while ((num < 1) || (num > 20))
+            {
+                Console.WriteLine("Please try again. A number between 1 and 20");
+                if ((num > 0) || (num < 21)) break;
+            }
+            return num;
         }
+
+
     }
 }
 
 
-            
+/*Console.WriteLine("There are 20 Questions available; you can choose any five\n");
+for (int i = 0; i < 5; i++)
+{ */
 
-    
+
+
+
+
+
 
