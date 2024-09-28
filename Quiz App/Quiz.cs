@@ -1,4 +1,7 @@
 using System;
+using System.Diagnostics;
+using System.Collections.Generic;
+using Quiz_App;
 
 namespace Quiz_App
 {
@@ -56,7 +59,7 @@ namespace Quiz_App
 
 
         // Int array that will hold exactly what question is being asked
-        public List<int> AskedQuestions = new List<int> { };
+        public static List<int> AskedQuestions = new List<int>() { };
 
         // getter method for the questions
         public string[] Questions
@@ -118,23 +121,55 @@ namespace Quiz_App
 
 
         // Method to be called when a question is being asked
-        public static int AskQuestn()
+        public static int QuestnNum()
         {
 
             int num = 0;
             Console.WriteLine("Please enter a number from 1 to 20:");
+
             while (true)
             {
                 bool j = int.TryParse(Console.ReadLine(), out num);
-                if (j) break;
-                Console.WriteLine("That was not a number,please try again");
+                if (j)
+                {
+                    switch (num)
+                    {
+                        case (< 1):
+                            Console.WriteLine("Please try again. A number between 1 and 20");
+                            break;
+
+                        case (> 20):
+                            Console.WriteLine("Please try again. A number between 1 and 20");
+                            break;
+
+                        default:
+                            if (AskedQuestions.Contains(num))
+                            {
+                                Console.WriteLine("You've picked that question before. Please choose another");
+                                break;
+                            }
+                            else
+                            {
+                                AskedQuestions.Add(num);
+                                return num;
+                            }
+
+
+
+                    }
+
+
+
+
+
+
+
+
+
+                }
+                else Console.WriteLine("That isn't a number. Please try again");
             }
-            while ((num < 1) || (num > 20))
-            {
-                Console.WriteLine("Please try again. A number between 1 and 20");
-                if ((num > 0) || (num < 21)) break;
-            }
-            return num;
+
         }
 
 
