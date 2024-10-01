@@ -181,6 +181,7 @@ namespace Quiz_App
 
         }
 
+        //Method to decide whether to stop the quiz or to continue
         public static bool StopDeciscion()
         {
             while (true)
